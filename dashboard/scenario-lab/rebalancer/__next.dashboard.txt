@@ -1,0 +1,5 @@
+1:"$Sreact.fragment"
+2:I[84044,["/oculus/_next/static/chunks/f4ffee881dde809e.js","/oculus/_next/static/chunks/2e467e36ef5fc6c1.js"],"default"]
+3:I[39756,["/oculus/_next/static/chunks/ff1a16fafef87110.js","/oculus/_next/static/chunks/d2be314c3ece3fbe.js"],"default"]
+4:I[37457,["/oculus/_next/static/chunks/ff1a16fafef87110.js","/oculus/_next/static/chunks/d2be314c3ece3fbe.js"],"default"]
+0:{"buildId":"EpD8zTj2e-zDL2xUliVVj","rsc":["$","$1","c",{"children":[[["$","script","script-0",{"src":"/oculus/_next/static/chunks/f4ffee881dde809e.js","async":true}],["$","script","script-1",{"src":"/oculus/_next/static/chunks/2e467e36ef5fc6c1.js","async":true}]],["$","div",null,{"className":"flex min-h-screen bg-[#0A0A0A]","children":[["$","$L2",null,{}],["$","main",null,{"className":"flex-1 p-6 overflow-auto","children":["$","$L3",null,{"parallelRouterKey":"children","template":["$","$L4",null,{}]}]}]]}]]}],"loading":null,"isPartial":false}

@@ -16,8 +16,8 @@ interface OculusButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {
 
 const sizeStyles: Record<Size, React.CSSProperties> = {
   sm: { padding: '6px 14px', fontSize: '12px', gap: '6px' },
-  md: { padding: '10px 20px', fontSize: '14px', gap: '8px' },
-  lg: { padding: '13px 26px', fontSize: '15px', gap: '8px' },
+  md: { padding: '10px 20px', fontSize: '14px', gap: '8px', minHeight: '44px' },
+  lg: { padding: '13px 26px', fontSize: '15px', gap: '8px', minHeight: '44px' },
 }
 
 const iconSizes: Record<Size, number> = {

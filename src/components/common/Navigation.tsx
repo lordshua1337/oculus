@@ -63,7 +63,7 @@ function ThemeToggle() {
   return (
     <button
       onClick={toggle}
-      aria-label="Toggle theme"
+      aria-label={isDark ? 'Switch to light mode' : 'Switch to dark mode'}
       style={{
         display: 'flex',
         alignItems: 'center',
@@ -137,6 +137,7 @@ export function Navigation() {
 
         {/* Nav items */}
         <nav
+          aria-label="Main navigation"
           style={{
             flex: 1,
             padding: '12px 8px',
@@ -153,6 +154,7 @@ export function Navigation() {
                 key={href}
                 href={href}
                 title={collapsed ? label : undefined}
+                aria-current={active ? 'page' : undefined}
                 style={{
                   display: 'flex',
                   alignItems: 'center',
@@ -229,7 +231,9 @@ export function Navigation() {
       {/* Mobile hamburger */}
       <button
         onClick={() => setMobileOpen(true)}
-        aria-label="Open navigation"
+        aria-label="Open navigation menu"
+        aria-expanded={mobileOpen}
+        aria-controls="mobile-nav-drawer"
         className="md:hidden flex items-center justify-center"
         style={{
           position: 'fixed',
@@ -270,6 +274,7 @@ export function Navigation() {
 
             {/* Drawer */}
             <motion.aside
+              id="mobile-nav-drawer"
               initial={{ x: '-100%' }}
               animate={{ x: 0 }}
               exit={{ x: '-100%' }}
@@ -331,6 +336,7 @@ export function Navigation() {
 
               {/* Mobile nav items */}
               <nav
+                aria-label="Main navigation"
                 style={{
                   flex: 1,
                   padding: '12px 8px',
@@ -346,6 +352,7 @@ export function Navigation() {
                       key={href}
                       href={href}
                       onClick={() => setMobileOpen(false)}
+                      aria-current={active ? 'page' : undefined}
                       style={{
                         display: 'flex',
                         alignItems: 'center',

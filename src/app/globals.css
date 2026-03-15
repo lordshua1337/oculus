@@ -1,26 +1,449 @@
 @import "tailwindcss";
 
+/* ============================================================
+   OCULUS DESIGN SYSTEM — GLOBAL TOKENS
+   ============================================================ */
+
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+  /* --- Brand Colors (immutable across themes) --- */
+  --oculus-blue: #006DD8;
+  --oculus-blue-soft: rgba(0, 109, 216, 0.1);
+  --oculus-green: #00b982;
+  --oculus-orange: #ff5102;
+  --oculus-yellow: #fca311;
+
+  /* --- Neutral Palette --- */
+  --off-black: #0f1012;
+  --grey-dark: #1d1e20;
+  --off-white: #f2f2f4;
+
+  /* --- Surface Stack (light mode) --- */
+  --bg-base: #ffffff;
+  --bg-card: #f7f7f9;
+  --bg-input: #f2f2f4;
+  --bg-glass: rgba(255, 255, 255, 0.72);
+
+  /* --- Text Stack (light mode) --- */
+  --text-primary: #0f1012;
+  --text-secondary: #3a3c40;
+  --text-muted: #7a7d85;
+
+  /* --- Border (light mode) --- */
+  --border: rgba(0, 0, 0, 0.08);
+
+  /* --- Shadows --- */
+  --shadow-card: 0 2px 8px rgba(0, 109, 216, 0.06), 0 1px 2px rgba(0, 0, 0, 0.04);
+  --shadow-card-hover: 0 8px 24px rgba(0, 109, 216, 0.12), 0 2px 6px rgba(0, 0, 0, 0.06);
+  --shadow-btn: 0 2px 8px rgba(0, 109, 216, 0.28);
+
+  /* --- Radius --- */
+  --radius-card: 20px;
+  --radius-btn: 12px;
+  --radius-input: 10px;
+  --radius-badge: 6px;
+
+  /* --- Transitions --- */
+  --transition-fast: 150ms ease;
+  --transition-base: 300ms ease;
 }
 
-@theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
+/* ============================================================
+   DARK MODE OVERRIDES
+   Surface and text tokens swap. Brand colors stay identical.
+   ============================================================ */
+
+[data-theme='dark'] {
+  /* --- Surface Stack (dark mode) --- */
+  --bg-base: #0f1012;
+  --bg-card: #1d1e20;
+  --bg-input: #252629;
+  --bg-glass: rgba(15, 16, 18, 0.72);
+
+  /* --- Text Stack (dark mode) --- */
+  --text-primary: #f2f2f4;
+  --text-secondary: #b0b3bc;
+  --text-muted: #5a5d66;
+
+  /* --- Border (dark mode) --- */
+  --border: rgba(255, 255, 255, 0.08);
+
+  /* --- Shadows (dark mode — more saturated blue tint) --- */
+  --shadow-card: 0 2px 8px rgba(0, 0, 0, 0.32), 0 1px 2px rgba(0, 0, 0, 0.24);
+  --shadow-card-hover: 0 8px 24px rgba(0, 109, 216, 0.18), 0 2px 6px rgba(0, 0, 0, 0.32);
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
+/* ============================================================
+   BASE STYLES
+   ============================================================ */
+
+html,
+body {
+  font-family: -apple-system, BlinkMacSystemFont, 'SF Pro Display', system-ui, sans-serif;
+  background-color: var(--bg-base);
+  color: var(--text-primary);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  margin: 0;
+  padding: 0;
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+/* ============================================================
+   UTILITY CLASSES
+   ============================================================ */
+
+/* Card — primary surface */
+.oculus-card {
+  background-color: var(--bg-card);
+  border-radius: var(--radius-card);
+  border: 1px solid var(--border);
+  box-shadow: var(--shadow-card);
+  transition: box-shadow var(--transition-base), transform var(--transition-fast);
+}
+
+.oculus-card:hover {
+  box-shadow: var(--shadow-card-hover);
+}
+
+/* Glass card — frosted surface for overlays */
+.glass-card {
+  background-color: var(--bg-glass);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border-radius: var(--radius-card);
+  border: 1px solid var(--border);
+}
+
+/* Primary button */
+.oculus-btn-primary {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  background-color: var(--oculus-blue);
+  color: #ffffff;
+  border: none;
+  border-radius: var(--radius-btn);
+  padding: 10px 20px;
+  font-family: inherit;
+  font-size: 14px;
+  font-weight: 500;
+  line-height: 1;
+  letter-spacing: -0.01em;
+  box-shadow: var(--shadow-btn);
+  cursor: pointer;
+  transition: background-color var(--transition-fast), box-shadow var(--transition-fast), transform var(--transition-fast);
+}
+
+.oculus-btn-primary:hover {
+  background-color: #005ec0;
+  box-shadow: 0 4px 16px rgba(0, 109, 216, 0.38);
+  transform: translateY(-1px);
+}
+
+.oculus-btn-primary:active {
+  background-color: #0052a8;
+  box-shadow: 0 1px 4px rgba(0, 109, 216, 0.20);
+  transform: translateY(0);
+}
+
+.oculus-btn-primary:focus-visible {
+  outline: 2px solid var(--oculus-blue);
+  outline-offset: 2px;
+}
+
+.oculus-btn-primary:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+  transform: none;
+  box-shadow: none;
+}
+
+/* Outline button */
+.oculus-btn-outline {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  background-color: transparent;
+  color: var(--text-primary);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-btn);
+  padding: 10px 20px;
+  font-family: inherit;
+  font-size: 14px;
+  font-weight: 500;
+  line-height: 1;
+  letter-spacing: -0.01em;
+  cursor: pointer;
+  transition: background-color var(--transition-fast), border-color var(--transition-fast), color var(--transition-fast), transform var(--transition-fast);
+}
+
+.oculus-btn-outline:hover {
+  background-color: var(--bg-input);
+  border-color: rgba(0, 109, 216, 0.3);
+  color: var(--oculus-blue);
+  transform: translateY(-1px);
+}
+
+.oculus-btn-outline:active {
+  transform: translateY(0);
+}
+
+.oculus-btn-outline:focus-visible {
+  outline: 2px solid var(--oculus-blue);
+  outline-offset: 2px;
+}
+
+.oculus-btn-outline:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+  transform: none;
+}
+
+/* Text input */
+.oculus-input {
+  display: block;
+  width: 100%;
+  background-color: var(--bg-input);
+  color: var(--text-primary);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-input);
+  padding: 10px 14px;
+  font-family: inherit;
+  font-size: 14px;
+  font-weight: 350;
+  line-height: 1.5;
+  letter-spacing: -0.01em;
+  transition: border-color var(--transition-fast), box-shadow var(--transition-fast);
+  outline: none;
+  -webkit-appearance: none;
+  appearance: none;
+}
+
+.oculus-input::placeholder {
+  color: var(--text-muted);
+}
+
+.oculus-input:hover {
+  border-color: rgba(0, 109, 216, 0.2);
+}
+
+.oculus-input:focus {
+  border-color: var(--oculus-blue);
+  box-shadow: 0 0 0 3px var(--oculus-blue-soft);
+}
+
+.oculus-input:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.oculus-input--error {
+  border-color: #ef4444;
+}
+
+.oculus-input--error:focus {
+  border-color: #ef4444;
+  box-shadow: 0 0 0 3px rgba(239, 68, 68, 0.12);
+}
+
+/* Select */
+.oculus-select {
+  display: block;
+  width: 100%;
+  background-color: var(--bg-input);
+  color: var(--text-primary);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-input);
+  padding: 10px 14px;
+  font-family: inherit;
+  font-size: 14px;
+  font-weight: 350;
+  line-height: 1.5;
+  letter-spacing: -0.01em;
+  transition: border-color var(--transition-fast), box-shadow var(--transition-fast);
+  outline: none;
+  cursor: pointer;
+  -webkit-appearance: none;
+  appearance: none;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 24 24' fill='none' stroke='%237a7d85' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='m6 9 6 6 6-6'/%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: right 14px center;
+  padding-right: 36px;
+}
+
+.oculus-select:hover {
+  border-color: rgba(0, 109, 216, 0.2);
+}
+
+.oculus-select:focus {
+  border-color: var(--oculus-blue);
+  box-shadow: 0 0 0 3px var(--oculus-blue-soft);
+}
+
+.oculus-select:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+/* Badge */
+.oculus-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  background-color: var(--oculus-blue-soft);
+  color: var(--oculus-blue);
+  border-radius: var(--radius-badge);
+  padding: 3px 8px;
+  font-size: 11px;
+  font-weight: 500;
+  letter-spacing: 0.02em;
+  line-height: 1;
+  white-space: nowrap;
+}
+
+.oculus-badge--green {
+  background-color: rgba(0, 185, 130, 0.1);
+  color: var(--oculus-green);
+}
+
+.oculus-badge--orange {
+  background-color: rgba(255, 81, 2, 0.1);
+  color: var(--oculus-orange);
+}
+
+.oculus-badge--yellow {
+  background-color: rgba(252, 163, 17, 0.1);
+  color: var(--oculus-yellow);
+}
+
+/* ============================================================
+   SPIN KEYFRAME (for loading spinners)
+   ============================================================ */
+
+@keyframes spin {
+  to { transform: rotate(360deg); }
+}
+
+/* ============================================================
+   BUTTON VARIANT HOVER STATES
+   ============================================================ */
+
+.oculus-btn-variant-primary:not(:disabled):hover {
+  background-color: #005ec0;
+  box-shadow: 0 4px 16px rgba(0, 109, 216, 0.38);
+  transform: translateY(-1px);
+}
+
+.oculus-btn-variant-primary:not(:disabled):active {
+  background-color: #0052a8;
+  box-shadow: 0 1px 4px rgba(0, 109, 216, 0.20);
+  transform: translateY(0);
+}
+
+.oculus-btn-variant-primary:focus-visible {
+  outline: 2px solid var(--oculus-blue);
+  outline-offset: 2px;
+}
+
+.oculus-btn-variant-outline:not(:disabled):hover {
+  background-color: var(--bg-input);
+  border-color: rgba(0, 109, 216, 0.3);
+  color: var(--oculus-blue);
+  transform: translateY(-1px);
+}
+
+.oculus-btn-variant-outline:not(:disabled):active {
+  transform: translateY(0);
+}
+
+.oculus-btn-variant-outline:focus-visible {
+  outline: 2px solid var(--oculus-blue);
+  outline-offset: 2px;
+}
+
+.oculus-btn-variant-ghost:not(:disabled):hover {
+  background-color: var(--bg-card);
+  color: var(--text-primary);
+}
+
+.oculus-btn-variant-ghost:focus-visible {
+  outline: 2px solid var(--oculus-blue);
+  outline-offset: 2px;
+}
+
+.oculus-btn-variant-danger:not(:disabled):hover {
+  background-color: rgba(239, 68, 68, 0.18);
+  border-color: rgba(239, 68, 68, 0.4);
+  transform: translateY(-1px);
+}
+
+.oculus-btn-variant-danger:not(:disabled):active {
+  transform: translateY(0);
+}
+
+.oculus-btn-variant-danger:focus-visible {
+  outline: 2px solid #ef4444;
+  outline-offset: 2px;
+}
+
+/* ============================================================
+   CARD HOVER LIFT
+   ============================================================ */
+
+.oculus-card-hover:hover {
+  box-shadow: var(--shadow-card-hover);
+  transform: translateY(-2px);
+}
+
+/* ============================================================
+   SKELETON SHIMMER ANIMATION
+   ============================================================ */
+
+@keyframes shimmer {
+  0% {
+    background-position: -400px 0;
+  }
+  100% {
+    background-position: 400px 0;
   }
 }
 
-body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+.skeleton-shimmer {
+  background: linear-gradient(
+    90deg,
+    var(--bg-card) 25%,
+    var(--bg-input) 50%,
+    var(--bg-card) 75%
+  );
+  background-size: 800px 100%;
+  animation: shimmer 1.6s infinite linear;
+}
+
+/* ============================================================
+   SCROLLBAR STYLING
+   ============================================================ */
+
+::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+::-webkit-scrollbar-thumb {
+  background-color: var(--border);
+  border-radius: 3px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background-color: var(--text-muted);
 }

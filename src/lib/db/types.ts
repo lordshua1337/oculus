@@ -41,6 +41,21 @@ export interface ClientNote {
   readonly created_by?: string
 }
 
+// ---- Report Types ----
+
+export type ReportType = 'quarterly' | 'annual' | 'tax' | 'compliance'
+
+// Represents a generated report record (stored in memory or database).
+export interface ReportRecord {
+  readonly id: string
+  readonly client_id: string
+  readonly client_name: string
+  readonly report_type: ReportType
+  readonly content: string
+  readonly source: 'static' | 'claude'
+  readonly generated_at: string
+}
+
 // Represents a single row from the portfolio_holdings table.
 export interface PortfolioHolding {
   readonly id: string
